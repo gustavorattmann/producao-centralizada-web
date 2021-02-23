@@ -1,0 +1,18 @@
+version: "3.9"
+services:
+  web:
+    container_name: "web_producao"
+    image: web_producao:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: "no"
+    ports:
+      - "8000:8080"
+    volumes:
+      - '.:/app'
+      - '/app/node_modules'
+    networks:
+      - producao_web
+networks:
+  producao_web:
