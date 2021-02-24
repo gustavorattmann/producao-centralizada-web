@@ -1,21 +1,25 @@
 <template>
-  <div class="login">
-    <div v-if="typeof status !== 'undefined' && status != 200">
-      <h1>{{ message }}</h1>
+  <div class="login container" id="login">
+    <div v-if="typeof status !== 'undefined' && status == 200">
+      <h1 class="title has-text-centered">{{ message }}</h1>
     </div>
-    <div v-else>
-      <h1>Faça login</h1>
+    <div class="box" v-else>
+      <h1 class="title has-text-centered">Faça login</h1>
       <form @submit.prevent="signIn">
-        <div>
-          <label for="email">E-mail: </label>
-          <input type="email" name="email" id="email" v-model="login.email">
+        <div class="field">
+          <label class="label" for="email">E-mail: </label>
+          <div class="control">
+            <input type="email" class="input" name="email" id="email" v-model="login.email">
+          </div>
         </div>
-        <div>
-          <label for="password">Senha: </label>
-          <input type="password" name="password" id="password" v-model="login.password">
+        <div class="field">
+          <label class="label" for="password">Senha: </label>
+          <div class="control">
+            <input type="password" class="input" name="password" id="password" v-model="login.password">
+          </div>
         </div>
-        <div>
-          <button type="submit">Logar</button>
+        <div class="has-text-right">
+          <button class="button is-info" type="submit">Logar</button>
         </div>
       </form>
       <section>
@@ -53,10 +57,9 @@ export default {
   },
   mounted () {
     if (localStorage.getItem('token')) {
-      router.push('/')
-    } else {
-      this.status = localStorage.getItem('status')
-      this.message = localStorage.getItem('message')
+      if (this.$route.path !== '/') {
+        this.$router.push('/')
+      }
     }
   },
   methods: {
@@ -79,9 +82,6 @@ export default {
           if (typeof res.data.status !== 'undefined') {
             this.status = res.data.status
             this.message = res.data.msg
-
-            localStorage.setItem('status', this.status)
-            localStorage.setItem('message', this.message)
           }
 
           if (typeof res.data.token !== 'undefined') {
@@ -90,9 +90,9 @@ export default {
 
             localStorage.setItem('token', this.token)
             localStorage.setItem('level', this.level)
-          }
 
-          router.push('/')
+            router.push('/')
+          }
         })
         .catch(error => {
           console.log(error)
