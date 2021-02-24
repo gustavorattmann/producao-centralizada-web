@@ -1,30 +1,39 @@
-<template v-if="childDataLoaded">
-  <div class="home">
-    <div v-if="typeof status !== 'undefined' && (status != 200 || status != 201)">
-      <h1>Erro {{ status }}: {{ message }}</h1>
+<template>
+  <div class="home container">
+    <div v-if="typeof status !== 'undefined' && (status != 200)">
+      <h1 class="title has-text-centered">{{ message }}</h1>
       <!--<router-link to="/login">Me leve para a página login!</router-link>-->
     </div>
-    <table class="" v-if="level == 1 || level == 2">
-      <tr>
-        <!--<caption>Todos usuários no sistema</caption>-->
-        <th>ID</th>
-        <th>Nome</th>
-        <th>E-mail</th>
-        <th>Cargo</th>
-        <th>Situação</th>
-        <th></th>
-        <th></th>
-        <th></th>
-      </tr>
-      <tr v-for="user in users" v-bind:key="user.id">
-        <td>{{ user.id }}</td>
-        <td>{{ user.name }}</td>
-        <td>{{ user.email }}</td>
-        <td>{{ user.role }}</td>
-        <td v-if="user.situation == 1">Ativo</td>
-        <td v-else>Inativo</td>
-      </tr>
-    </table>
+    <div v-else>
+      <table class="table is-striped is-hoverable is-fullwidth has-text-centered" v-if="level == 1 || level == 2">
+        <caption>Lista com todos usuários cadastrados no sistema</caption>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>E-mail</th>
+            <th>Cargo</th>
+            <th>Situação</th>
+            <th></th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="user in users" v-bind:key="user.id">
+            <td>{{ user.id }}</td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.role }}</td>
+            <td v-if="user.situation == 1">Ativo</td>
+            <td v-else>Inativo</td>
+            <td><router-link class="has-text-black" :title="'Acessar perfil de ' + user.name" :to=" { name: 'Profile', params: {id: user.id } } "><font-awesome-icon icon="id-card" /></router-link></td>
+            <td><font-awesome-icon icon="edit" /></td>
+            <td><font-awesome-icon icon="trash" /></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 
@@ -70,11 +79,11 @@ export default {
           this.message = res.data.msg
         }
 
-        if (this.status === 401) {
+        /* if (this.status === 401) {
           setTimeout(function () {
-            // router.push('/login')
+            router.push('/login')
           }, 5000)
-        }
+        } */
       })
       .catch(error => {
         console.log(error)
