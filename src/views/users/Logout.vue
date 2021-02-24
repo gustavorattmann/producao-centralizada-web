@@ -1,10 +1,10 @@
 <template>
   <div id="logout">
     <div>
-      <h1 v-if="typeof status !== 'undefined' && (status == 200 || status == 201)">{{ message }}</h1>
-      <h1 v-else>Erro {{ status }}: {{ message }}</h1>
-      <router-link to="/login">Me leve para a página login!</router-link>
-      <!--<a href="" target="_self">Me leve para a página de login!</a>-->
+      <h1 class="title has-text-centered">{{ message }}</h1>
+      <div class="has-text-centered">
+        <router-link to="/login">Me leve para a página de login!</router-link>
+      </div>
     </div>
   </div>
 </template>
