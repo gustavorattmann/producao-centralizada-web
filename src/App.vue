@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <Header/>
+    <router-view class="py-5"/>
     <Footer/>
   </div>
 </template>
