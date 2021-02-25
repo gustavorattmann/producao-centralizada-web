@@ -1,7 +1,6 @@
 <template>
   <header id="header">
-    <Navigation/>
-    <router-view/>
+    <Navigation :key="$route.fullPath"/>
   </header>
 </template>
 
