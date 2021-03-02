@@ -3,7 +3,7 @@
     <div>
       <h1 class="title has-text-centered">{{ message }}</h1>
       <div class="has-text-centered">
-        <router-link to="/login">Me leve para a página de login!</router-link>
+        <router-link :to=" { name: 'Login' }">Me leve para a página de login!</router-link>
       </div>
     </div>
   </div>
@@ -53,7 +53,7 @@ export default {
       })
 
     setTimeout(function () {
-      router.push('/login')
+      router.push({ name: 'Login' })
     }, 5000)
   }
 }

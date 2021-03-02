@@ -1,5 +1,5 @@
 <template>
-  <div class="home container">
+  <div id="home" class="container">
     <div v-if="typeof status !== 'undefined' && (status != 200)">
       <h1 class="title has-text-centered">{{ message }}</h1>
       <!--<router-link to="/login">Me leve para a página login!</router-link>-->
@@ -27,7 +27,7 @@
             <td>{{ user.role }}</td>
             <td v-if="user.situation == 1">Ativo</td>
             <td v-else>Inativo</td>
-            <td><router-link class="has-text-black" :title="'Acessar perfil de ' + user.name" :to=" { name: 'Profile', params: {id: user.id } } "><font-awesome-icon icon="id-card" /></router-link></td>
+            <td><router-link class="has-text-black" :title="'Acessar perfil de ' + user.name" :to=" { name: 'UserProfile', params: {id: user.id } } "><font-awesome-icon icon="id-card" /></router-link></td>
             <td><font-awesome-icon icon="edit" /></td>
             <td><font-awesome-icon icon="trash" /></td>
           </tr>
