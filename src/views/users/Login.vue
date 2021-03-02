@@ -1,5 +1,5 @@
 <template>
-  <div class="login container" id="login">
+  <div class="container" id="login">
     <div v-if="typeof status !== 'undefined' && status == 200">
       <h1 class="title has-text-centered">{{ message }}</h1>
     </div>
@@ -7,19 +7,38 @@
       <h1 class="title has-text-centered">Faça login</h1>
       <form @submit.prevent="signIn">
         <div class="field">
-          <label class="label" for="email">E-mail: </label>
-          <div class="control">
-            <input type="email" class="input" name="email" id="email" v-model="login.email">
+          <label for="email" class="label" >E-mail: </label>
+          <div class="control has-icons-left">
+            <input type="email" class="input" v-model="login.email">
+            <span class="icon is-small is-left">
+              <font-awesome-icon icon="envelope" />
+            </span>
           </div>
         </div>
         <div class="field">
-          <label class="label" for="password">Senha: </label>
+          <label for="password" class="label">Senha: </label>
+        </div>
+        <div class="field has-addons">
+          <div class="control is-expanded has-icons-left has-icons-right">
+            <input :type="eye ? 'text' : 'password'" class="input" v-model="login.password">
+            <span class="icon is-small is-left">
+              <font-awesome-icon icon="key" />
+            </span>
+          </div>
           <div class="control">
-            <input type="password" class="input" name="password" id="password" v-model="login.password">
+            <button type="button" class="button is-info" @click.stop="showPassword">
+              <font-awesome-icon icon="eye-slash" v-if="eye" />
+              <font-awesome-icon icon="eye" v-else />
+            </button>
           </div>
         </div>
-        <div class="has-text-right">
-          <button class="button is-info" type="submit">Logar</button>
+        <div class="field is-grouped is-grouped-centered">
+          <div class="control">
+            <button type="submit" class="button is-link"><font-awesome-icon icon="sign-in-alt" class="mr-2" />Logar</button>
+          </div>
+          <div class="control">
+            <button type="reset" class="button is-link is-light"><font-awesome-icon icon="ban" class="mr-2" />Limpar</button>
+          </div>
         </div>
       </form>
       <section>
@@ -49,6 +68,7 @@ export default {
         email: '',
         password: ''
       },
+      eye: false,
       token: undefined,
       level: undefined,
       message: '',
@@ -91,12 +111,19 @@ export default {
             localStorage.setItem('token', this.token)
             localStorage.setItem('level', this.level)
 
-            router.push('/')
+            router.push({ name: 'User' })
           }
         })
         .catch(error => {
           console.log(error)
         })
+    },
+    showPassword () {
+      if (this.eye) {
+        this.eye = false
+      } else {
+        this.eye = true
+      }
     }
   }
 }
