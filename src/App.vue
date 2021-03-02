@@ -26,4 +26,12 @@ export default {
 
 <style lang="scss">
 @import 'bulma';
+
+.field-label-password {
+  margin-bottom: 0.5em !important;
+}
+
+.field-input-password {
+  margin-bottom: 0 !important;
+}
 </style>
