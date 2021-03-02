@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/users/Home.vue'
-import Profile from '../views/users/Profile.vue'
+import User from '../views/users/Home.vue'
+import UserRegister from '../views/users/Register.vue'
+import UserProfile from '../views/users/Profile.vue'
 import Login from '../views/users/Login.vue'
 import Logout from '../views/users/Logout.vue'
 
@@ -9,14 +10,19 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
-    name: 'Home',
-    component: Home
+    path: '/usuario',
+    name: 'User',
+    component: User
   },
   {
-    path: '/profile/:id',
-    name: 'Profile',
-    component: Profile,
+    path: '/usuario/cadastro',
+    name: 'UserRegister',
+    component: UserRegister
+  },
+  {
+    path: '/perfil/:id',
+    name: 'UserProfile',
+    component: UserProfile,
     props: true
   },
   {
@@ -25,7 +31,7 @@ const routes = [
     component: Login
   },
   {
-    path: '/logout',
+    path: '/sair',
     name: 'Logout',
     component: Logout
   }
