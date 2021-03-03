@@ -1,10 +1,10 @@
 <template>
   <div id="register" class="container">
-    <div v-if="level != 1 && level != 2">
+    <div v-if="typeof status !== 'undefined'">
       <h1 class="title has-text-centered">{{ message }}</h1>
-      <!--<router-link to="/login">Me leve para a página login!</router-link>-->
+      <router-link class="has-text-centered" :to=" { name: 'User' } ">Me leve para a página inicial!</router-link>
     </div>
-    <div v-else>
+    <div v-if="status != 201 && (level == 1 || level == 2)">
       <div class="box">
         <form @submit.prevent="register">
           <h1 class="title has-text-centered">Cadastro de usuário</h1>
@@ -90,6 +90,15 @@
 
 <script>
 import axios from 'axios'
+import router from '../../router/index'
+
+const config = {
+  headers: {
+    'content-type': 'application/form-data',
+    Authorization: `Bearer ${localStorage.getItem('token')}`
+  },
+  withCredentials: true
+}
 
 export default {
   name: 'Register',
@@ -134,14 +143,6 @@ export default {
   mounted () {
     this.level = localStorage.getItem('level')
 
-    const config = {
-      headers: {
-        'content-type': 'application/form-data',
-        Authorization: `Bearer ${localStorage.getItem('token')}`
-      },
-      withCredentials: true
-    }
-
     axios.get('http://api.producaocentralizada/api/roles', config)
       .then(res => {
         if (typeof res.data.status !== 'undefined') {
@@ -160,7 +161,27 @@ export default {
   },
   methods: {
     register () {
+      const registerForm = new FormData()
 
+      registerForm.append('name', this.user.name)
+      registerForm.append('email', this.user.email)
+      registerForm.append('password', this.user.password)
+      registerForm.append('level', this.user.role)
+
+      axios.post('http://api.producaocentralizada/api/users/register', registerForm, config)
+        .then(res => {
+          this.status = res.data.status
+          this.message = res.data.msg
+
+          if (this.status === 201) {
+            setTimeout(function () {
+              router.push({ name: 'User' })
+            }, 5000)
+          }
+        })
+        .catch(error => {
+          console.log(error)
+        })
     },
     showPassword () {
       if (this.eye) {
