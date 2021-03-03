@@ -1,10 +1,8 @@
 <template>
   <div id="logout">
-    <div>
-      <h1 class="title has-text-centered">{{ message }}</h1>
-      <div class="has-text-centered">
-        <router-link :to=" { name: 'Login' }">Me leve para a página de login!</router-link>
-      </div>
+    <h1 class="title has-text-centered">{{ message }}</h1>
+    <div class="has-text-centered">
+      <router-link :to=" { name: 'Login' }">Me leve para a página de login!</router-link>
     </div>
   </div>
 </template>
