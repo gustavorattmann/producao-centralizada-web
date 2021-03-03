@@ -2,7 +2,9 @@
   <div id="register" class="container">
     <div v-if="typeof status !== 'undefined'">
       <h1 class="title has-text-centered">{{ message }}</h1>
-      <router-link class="has-text-centered" :to=" { name: 'User' } ">Me leve para a página inicial!</router-link>
+      <div class="has-text-centered">
+        <router-link :to=" { name: 'User' } ">Me leve para a página inicial!</router-link>
+      </div>
     </div>
     <div v-if="status != 201 && (level == 1 || level == 2)">
       <div class="box">
