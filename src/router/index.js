@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import NotFound from '../views/NotFound.vue'
 import User from '../views/users/Home.vue'
 import UserRegister from '../views/users/Register.vue'
 import UserProfile from '../views/users/Profile.vue'
@@ -9,6 +10,11 @@ import Logout from '../views/users/Logout.vue'
 Vue.use(VueRouter)
 
 const routes = [
+  {
+    path: '*',
+    name: 'NotFound',
+    component: NotFound
+  },
   {
     path: '/usuario',
     name: 'User',
