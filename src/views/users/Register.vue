@@ -204,7 +204,7 @@ export default {
       }
     },
     requiredPassword () {
-      if (this.user.password.length < 1 || this.user.password.length < 7) {
+      if (this.user.password.length < 1 || this.user.password.length < 7 || this.user.password.length > 32) {
         this.validation.password.required = false
         this.validation.password.class = 'is-danger'
 
@@ -212,6 +212,8 @@ export default {
           this.validation.password.message = 'Campo está vazio!'
         } else if (this.user.password.length < 7) {
           this.validation.password.message = 'Por favor, senha deve conter no mínimo 6 caracteres!'
+        } else if (this.user.password.length > 32) {
+          this.validation.password.message = 'Por favor, senha deve conter no máximo 32 caracteres!'
         }
       } else {
         this.validation.password.required = true
