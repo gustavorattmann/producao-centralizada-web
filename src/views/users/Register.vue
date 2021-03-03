@@ -170,10 +170,17 @@ export default {
       }
     },
     requiredName () {
-      if (this.user.name.length < 1) {
+      if (this.user.name.length < 1 || this.user.name.length > 100 || !this.validName(this.user.name)) {
         this.validation.name.required = false
-        this.validation.name.message = 'Campo está vazio!'
         this.validation.name.class = 'is-danger'
+
+        if (this.user.name.length < 1) {
+          this.validation.name.message = 'Campo está vazio!'
+        } else if (this.user.name.length > 100) {
+          this.validation.name.message = 'Por favor, insira um nome com menos caracteres!'
+        } else {
+          this.validation.name.message = 'Por favor, insira um nome válido!'
+        }
       } else {
         this.validation.name.required = true
         this.validation.name.message = ''
@@ -181,10 +188,15 @@ export default {
       }
     },
     requiredEmail () {
-      if (this.user.email.length < 1) {
+      if (this.user.email.length < 1 || !this.validEmail(this.user.email)) {
         this.validation.email.required = false
-        this.validation.email.message = 'Campo está vazio!'
         this.validation.email.class = 'is-danger'
+
+        if (this.user.email.length < 1) {
+          this.validation.email.message = 'Campo está vazio!'
+        } else {
+          this.validation.email.message = 'Por favor, insira um e-mail válido!'
+        }
       } else {
         this.validation.email.required = true
         this.validation.email.message = ''
@@ -192,15 +204,28 @@ export default {
       }
     },
     requiredPassword () {
-      if (this.user.password.length < 1) {
+      if (this.user.password.length < 1 || this.user.password.length < 7) {
         this.validation.password.required = false
-        this.validation.password.message = 'Campo está vazio!'
         this.validation.password.class = 'is-danger'
+
+        if (this.user.password.length < 1) {
+          this.validation.password.message = 'Campo está vazio!'
+        } else if (this.user.password.length < 7) {
+          this.validation.password.message = 'Por favor, senha deve conter no mínimo 6 caracteres!'
+        }
       } else {
         this.validation.password.required = true
         this.validation.password.message = ''
         this.validation.password.class = 'is-success'
       }
+    },
+    validName: function (name) {
+      var regex = /^((\b[A-zÀ-ú']{2,40}\b)\s*){2,}$/
+      return regex.test(name)
+    },
+    validEmail: function (email) {
+      var regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      return regex.test(email)
     }
   }
 }
