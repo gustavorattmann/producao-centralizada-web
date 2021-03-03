@@ -46,15 +46,17 @@ export default {
         if (localStorage.getItem('token')) {
           localStorage.removeItem('token')
           localStorage.removeItem('level')
+
+          if (!localStorage.getItem('token') && !localStorage.getItem('level')) {
+            setTimeout(function () {
+              router.push({ name: 'Login' })
+            }, 5000)
+          }
         }
       })
       .catch(error => {
         console.log(error)
       })
-
-    setTimeout(function () {
-      router.push({ name: 'Login' })
-    }, 5000)
   }
 }
 </script>
